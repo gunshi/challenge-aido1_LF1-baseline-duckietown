@@ -31,6 +31,8 @@ def solve(gym_environment, cis):
 
     # Then we make sure we have a connection with the environment and it is ready to go
     cis.info('Reset environment')
+
+
     observation = env.reset()
     # While there are no signal of completion (simulation done)
     # we run the predictions for a number of episodes, don't worry, we have the control on this part
@@ -51,7 +53,7 @@ def solve(gym_environment, cis):
         # To trigger the lane following pipeline, we publish the image 
         # and camera_infos to the correct topics defined in rosagent
         agent._publish_img(observation)
-        agent._publish_info()
+        agent._publish_info()  												
 
         # The action is updated inside of agent by other nodes asynchronously
         action = agent.action
@@ -59,7 +61,7 @@ def solve(gym_environment, cis):
         if np.array_equal(action, np.array([0, 0])):
             continue
             
-        observation, reward, done, info = env.step(action)
+        observation, reward, done, info = env.step(action) 								
         # here you may want to compute some stats, like how much reward are you getting
         # notice, this reward may no be associated with the challenge score.
 

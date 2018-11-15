@@ -13,20 +13,34 @@ COPY solution.py ./
 COPY rosagent.py ./
 COPY lf_slim.launch ./
 
+
+
+
+
 ## Uncomment these to build your own catkin_ws
 #### START CUSTOM CATKIN_WS ####
 
-# RUN /bin/bash -c "mkdir -p custom_ws/src/"
+RUN /bin/bash -c "mkdir -p custom_ws/src/"
 
 ## Copy or init your packages in here
 # COPY dt_dependent_node custom_ws/dt_dependent_node
 # RUN chmod +x custom_ws/src/dt_dependent_node/dt_dependent_node.py
 
+COPY custom_line_detector custom_ws/src/custom_line_detector
+COPY custom_lane_filter custom_ws/src/custom_lane_filter
+COPY custom_ground_projection custom_ws/src/custom_ground_projection
+
+RUN chmod +x custom_ws/src/custom_line_detector/src/line_detector_node.py
+RUN chmod +x custom_ws/src/custom_lane_filter/src/lane_filter_node.py
+RUN chmod +x custom_ws/src/custom_ground_projection/src/ground_projection_node.py
+
+
+
 ## Do not change the below line! This ensures that your workspace is overlayed on top of the Duckietown stack!  
 ## MAKE sure this line is present in the build: This workspace overlays: /home/software/catkin_ws/devel;/opt/ros/kinetic
-# RUN /bin/bash -c "source /home/software/catkin_ws/devel/setup.bash && catkin_init_workspace && cd ../.."
-# RUN /bin/bash -c "source /home/software/catkin_ws/devel/setup.bash && catkin_make -j -C custom_ws/"
-# RUN /bin/bash -c "source custom_ws/devel/setup.bash"
+RUN /bin/bash -c "source /home/software/catkin_ws/devel/setup.bash && catkin_init_workspace && cd ../.."
+RUN /bin/bash -c "source /home/software/catkin_ws/devel/setup.bash && catkin_make -j -C custom_ws/"
+RUN /bin/bash -c "source custom_ws/devel/setup.bash"
 
 #### END CUSTOM CATKIN_WS ####
 
